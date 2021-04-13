@@ -5,8 +5,6 @@ var initialState = data ? data : [];
 
 // ===== Thêm sản phẩm vào giỏ hàng ========= //
 var findProductToCart = (cart, product) => {
-    console.log(cart);
-    console.log(product);
     var index = -1;
     if (cart.length > 0) {
         for (var i = 0; i < cart.length; i++) {
@@ -49,6 +47,17 @@ const cart = (state = initialState, action) => {
             localStorage.setItem('CART', JSON.stringify(state));
             return [...state];
         // ================================================== //
+
+        // ======== Thêm bớt sản phẩm trong giỏ hàng =============== //
+        case Types.UPDATE_PRODUCT_IN_CART:
+            index = findProductToCart(state, product);
+            if (index !== -1) {
+                state[index].quantity = quantity;
+            }
+            localStorage.setItem('CART', JSON.stringify(state));
+            return [...state];
+        // ================================================== //
+
         default: return [...state];
 
     }

@@ -10,7 +10,7 @@ import * as action from './../actions/index';
 class CartContainer extends Component {
 
     showCartItem = (cart) => {
-        var { onDeleteProduct, onChangeMessage } = this.props;
+        var { onDeleteProduct, onChangeMessage, onUpdateProductInCart } = this.props;
         var result = <tr><td>{Message.MSG_CART_EMPTY}</td></tr>;
         if (cart.length > 0) {
             result = cart.map((item, index) => {
@@ -21,6 +21,7 @@ class CartContainer extends Component {
                         index={index}
                         onDeleteProduct={onDeleteProduct}
                         onChangeMessage={onChangeMessage}
+                        onUpdateProductInCart={onUpdateProductInCart}
                     >
                     </CartItem>
                 )
@@ -92,7 +93,11 @@ const maDispatchToProps = (dispatch, props) => {
 
         onChangeMessage: (message) => {
             dispatch(action.actChangeMessage(message))
-        }
+        },
+
+        onUpdateProductInCart: (product, quantity) => {
+            dispatch(action.actUpdateProductInCart(product, quantity))
+        },
     }
 }
 
