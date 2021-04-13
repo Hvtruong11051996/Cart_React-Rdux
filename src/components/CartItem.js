@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as Message from './../constains/Message';
 
 class CartItem extends Component {
 
@@ -7,6 +8,13 @@ class CartItem extends Component {
         return price * quantity
     }
     // ====================================================== //
+
+    // =================== Xóa sản phẩm trong giỏ hàng =================== //
+    onDelete = (product) => {
+        this.props.onDeleteProduct(product)
+        this.props.onChangeMessage(Message.MSG_DELETE_PRODUCT_IN_CART_SUCCESS)
+    }
+    // ================================================================== //
 
     render() {
         var { item } = this.props;
@@ -36,8 +44,15 @@ class CartItem extends Component {
                 </td>
                 <td>{this.showTotal(item.product.price, item.quantity)}$</td>
                 <td>
-                    <button type="button" className="btn btn-sm btn-primary waves-effect waves-light" data-toggle="tooltip" data-placement="top"
-                        title="" data-original-title="Remove item">
+                    <button
+                        type="button"
+                        className="btn btn-sm btn-primary waves-effect waves-light"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title=""
+                        data-original-title="Remove item"
+                        onClick={() => this.onDelete(item.product)}
+                    >
                         X
                     </button>
                 </td>
