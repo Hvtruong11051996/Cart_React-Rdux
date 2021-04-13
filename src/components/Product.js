@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as Message from './../constains/Message';
 
 class Product extends Component {
     // ==================== Hiển thị sao rating ================== //
@@ -17,6 +18,7 @@ class Product extends Component {
     // ===================== Mua sản phẩm ======================= //
     onAddToCart = (product) => {
         this.props.onAddToCart(product)
+        this.props.onChangeMessage(Message.MSG_ADD_TO_CART_SUCCESS);
     }
     // ========================================================== //
     render() {

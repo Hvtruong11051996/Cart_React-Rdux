@@ -2,20 +2,21 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Products from './../components/Products';
 import Product from './../components/Product';
-import { actAddToCart } from './../actions/index';
+import * as action from './../actions/index';
 
 class ProductContainer extends Component {
 
     // ========= Map lại danh sách sản phẩm ========= //
     showProduct = (products) => {
         var result = null;
-        var { onAddToCart } = this.props;
+        var { onAddToCart, onChangeMessage } = this.props;
         if (products.length > 0) {
             result = products.map((product, index) => {
                 return <Product
                     key={index}
                     product={product}
                     onAddToCart={onAddToCart}
+                    onChangeMessage={onChangeMessage}
                 >
                 </Product>
             })
@@ -43,7 +44,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = (dispatch, props) => {
     return {
         onAddToCart: (product) => {
-            dispatch(actAddToCart(product, 1));
+            dispatch(action.actAddToCart(product, 1));
+        },
+
+        onChangeMessage: (message) => {
+            dispatch(action.actChangeMessage(message))
         }
     };
 }
