@@ -1,38 +1,41 @@
-import * as types from './../constains/ActionTypes';
+import * as Types from './../constains/ActionTypes';
 
 var data = JSON.parse(localStorage.getItem('CART'))
-var initialState = [
-    {
-        product: {
-            id: 1,
-            name: 'Điện thoại Iphone 6',
-            image: 'https://cdn.mobilecity.vn/mobilecity-vn/images/2019/01/iphone-6-gold.jpg',
-            description: 'Sản xuất bởi Apple',
-            price: 500,
-            inventory: 10, // hàng tồn kho
-            rating: 5
-        },
-        quantity: 5
-    },
-    {
-        product: {
-            id: 2,
-            name: 'Điện thoại Iphone 7',
-            image: 'https://dienthoaihay.vn/images/products/2020/06/25/large/iphone-7-plus-bac_1593097981-copy.jpg',
-            description: 'Sản xuất bởi Apple',
-            price: 500,
-            inventory: 10, // hàng tồn kho
-            rating: 4
-        },
-        quantity: 9
+var initialState = data ? data : [];
+
+var findProductToCart = (cart, product) => {
+    console.log(cart);
+    console.log(product);
+    var index = -1;
+    if (cart.length > 0) {
+        for (var i = 0; i < cart.length; i++) {
+            if (cart[i].product.id === product.id) {
+                index = i;
+                break;
+            }
+        }
     }
-];
+    return index;
+}
 
 const cart = (state = initialState, action) => {
+    var { product, quantity } = action;
+    var index = -1;
+
     switch (action.type) {
-        case types.ADD_TO_CART:
-            console.log(action);
-            return [...state]
+        case Types.ADD_TO_CART:
+            index = findProductToCart(state, product);
+            console.log(state);
+            if (index !== -1) {
+                state[index].quantity += quantity;
+            } else {
+                state.push({
+                    product,
+                    quantity
+                })
+            }
+            localStorage.setItem('CART', JSON.stringify(state));
+            return [...state];
 
         default: return [...state];
 
